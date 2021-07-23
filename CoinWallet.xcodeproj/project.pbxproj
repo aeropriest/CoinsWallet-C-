@@ -23,10 +23,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE49718426AA62D2009CF7A4 /* Distributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Distributor.h; sourceTree = "<group>"; };
 		FED0D01D26AA5FC500FB9BC4 /* CoinWallet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CoinWallet; sourceTree = BUILT_PRODUCTS_DIR; };
 		FED0D02026AA5FC500FB9BC4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FED0D02726AA5FF100FB9BC4 /* Wallet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wallet.h; sourceTree = "<group>"; };
-		FED0D02826AA5FF100FB9BC4 /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
 		FED0D02926AA5FF100FB9BC4 /* Coin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coin.h; sourceTree = "<group>"; };
 		FED0D02A26AA5FF100FB9BC4 /* BucketTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketTests.h; sourceTree = "<group>"; };
 		FED0D02B26AA5FF100FB9BC4 /* AddTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTests.h; sourceTree = "<group>"; };
@@ -66,12 +66,12 @@
 		FED0D01F26AA5FC500FB9BC4 /* CoinWallet */ = {
 			isa = PBXGroup;
 			children = (
+				FE49718426AA62D2009CF7A4 /* Distributor.h */,
 				FED0D02B26AA5FF100FB9BC4 /* AddTests.h */,
 				FED0D02A26AA5FF100FB9BC4 /* BucketTests.h */,
 				FED0D02926AA5FF100FB9BC4 /* Coin.h */,
 				FED0D02F26AA5FF100FB9BC4 /* Defines.h */,
 				FED0D02E26AA5FF100FB9BC4 /* DistributionTests.h */,
-				FED0D02826AA5FF100FB9BC4 /* requirements.txt */,
 				FED0D02C26AA5FF100FB9BC4 /* ReserveTests.h */,
 				FED0D02D26AA5FF100FB9BC4 /* SpendTests.h */,
 				FED0D02726AA5FF100FB9BC4 /* Wallet.h */,
