@@ -39,8 +39,8 @@ void SpendTests(){
 
 
         cout << "Test Case 2.4 ";
-        big_long spend = 22;
-        big_long availabel = wallet.available();
+        MAX_LONG spend = 22;
+        MAX_LONG availabel = wallet.available();
         ret = wallet.spend(spend);
         !ret ? cout << "\tFAILED \u2718 !" : cout << "\tPASSED \u2714 ";
         cout << "\t[ Spending ("<<spend<<") less than wallet value "<<availabel<<" was approved]"<<endl;

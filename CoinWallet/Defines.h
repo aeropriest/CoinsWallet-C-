@@ -18,10 +18,12 @@
 #define MAX_POWER       5
 
 
-typedef unsigned long long      big_long;
+typedef unsigned long long      MAX_LONG;
+
 
 using namespace std;
-typedef vector<Coin>       CoinsVector;
-
+typedef vector<Coin>                        CoinsVector;
+typedef vector<MAX_LONG>                    MaxLongVector;
+typedef vector<MaxLongVector>            BucketVector;
 
 #endif /* Defines_h */

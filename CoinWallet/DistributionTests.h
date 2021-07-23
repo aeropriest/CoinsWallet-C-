@@ -11,7 +11,7 @@ void FillWallet(Wallet *wallet){
     //fill the bucket
     for(int j=0; j<MAX_POWER; j++)
     {
-        unsigned long long low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1)-1, coin_val = 0;
+        MAX_LONG low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1)-1, coin_val = 0;
         int limit = rand() % 6+2;
         for(int i=0; i<limit; i++){
             coin_val = rand() % high + low;
@@ -30,20 +30,20 @@ void TestBucketDistribution(int test_count, int j, Wallet *wallet){
     }
     CoinsVector bucket = wallet->get_bucket(j);
     bool result = true;
-    unsigned long long low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1)-1;
+    MAX_LONG low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1)-1;
     for (CoinsVector::iterator coin = bucket.begin() ; coin != bucket.end(); ++coin){
-        unsigned long long value = coin->get_value();
+        MAX_LONG value = coin->get_value();
         if( value <=low || value >= high){
             result = false;
             break;
         }
     }
-    result ? cout << "\tPASSED \u2714" : cout << "\tFAILED \u2718";
+    result ? cout << "\tPASSED \u2714 " : cout << "\tFAILED \u2718";
     
     cout << "\t[ ("<<low<<" ... "<<high<<") ";
     
     for (vector<Coin>::iterator coin = bucket.begin() ; coin != bucket.end(); ++coin){
-        unsigned long long value = coin->get_value();
+        MAX_LONG value = coin->get_value();
         cout << value << ", ";
     }
     cout<<"]"<<endl;

@@ -14,91 +14,67 @@ public:
     Wallet(){
         total_value = 0;
     }
+    
+    bool require(MAX_LONG value){
+        return !( value <= 0 || value > WALLET_LIMIT || value > this->total_value );
+    }
+
     bool add(Coin coin){
-
-        big_long value = coin.get_value();
         
-        if( value <= 0 || value > COIN_LIMIT || total_value+value >= WALLET_LIMIT){
+        MAX_LONG value = coin.get_value();
+        
+        if( value <= 0 || value > COIN_LIMIT || this->total_value+value >= WALLET_LIMIT){
             return false;
         }
-        /*
-         for( big_long j=0; j<MAX_POWER; j++){
-         big_long low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1);
-         
-         if( value >= low && value < high ){
-         buckets[j].push_back(coin);
-         return true;
-         }
-         }*/
-        bool ret = false;
-        if( value >= pow(BUCKET_STEP,0) && value < pow(BUCKET_STEP,1) ){
-            ret = true;
-            buckets[0].push_back(coin);
-        }else if( value >= pow(BUCKET_STEP,1) && value < pow(BUCKET_STEP,2) ){
-            ret = true;
-            buckets[1].push_back(coin);
-        }else if( value >= pow(BUCKET_STEP,2) && value < pow(BUCKET_STEP,3) ){
-            ret = true;
-            buckets[2].push_back(coin);
-        }else if( value >= pow(BUCKET_STEP,3) && value < pow(BUCKET_STEP,4) ){
-            ret = true;
-            buckets[3].push_back(coin);
-        }else if( value >= pow(BUCKET_STEP,4) && value < pow(BUCKET_STEP,5) ){
-            ret = true;
-            buckets[4].push_back(coin);
-        }else {
-            return false;
-        }
-
-        total_value += value;
+        
+        this->total_value += value;
         coins.push_back(coin);
-        return ret;
+        
+        return true;
     }
     
+    ////////////////////
     CoinsVector get_bucket(short index){
-        //return distribution.get_bucket(index);
         return buckets[index];
     }
     
     short buckets_size() const{
         return MAX_POWER;
     }
+    ///////////////
     
-    big_long available() const {
-        return total_value;
+    MAX_LONG available() const {
+        return this->total_value;
     }
-
     
-    bool spend(big_long _value){
+    bool spend(MAX_LONG value){
 
-        if( _value <= 0 || _value > WALLET_LIMIT || _value > this->total_value ){
+        if( !require(value))
             return false;
-        }
-        big_long _total_value= 0;
-        for (CoinsVector::iterator coin = coins.begin() ; coin != coins.end(); ++coin){
-            _total_value += coin->get_value();
+        
+        MAX_LONG total= 0;
+        for (CoinsVector::iterator coin = coins.begin(); coin != coins.end(); ++coin){
+            total += coin->get_value();
             this->total_value -= coin->get_value();
             coins.erase(coin);
             coin--;
-            if( _value <= _total_value )
+            if( value <= total )
                 return true;
         }
         return false;
-    }
-    
-    bool reserve(big_long _value){
-        if( _value <= 0 || _value > WALLET_LIMIT || _value > this->total_value ){
-            return false;
-        }
+    }    
 
-        big_long _total_value= 0;
-        //cout << " reserve now " << _value << "  " << _total_value << endl;
+    bool reserve(MAX_LONG value){
+
+        if( !require(value))
+            return false;
+
+        MAX_LONG total = 0;
         for (CoinsVector::iterator coin = coins.begin() ; coin != coins.end(); ++coin){
-            _total_value += coin->get_value();
-            //cout << " reserve now " << _value << "  " << _total_value << endl;
-            if( _value <= _total_value ){
+            total += coin->get_value();
+            if( value <= total ){
                 coin->set_reserve(true);
-                this->total_value -= _total_value;
+                this->total_value -= total;
                 return true;
             }
             coin->set_reserve(true);
@@ -106,7 +82,7 @@ public:
         return false;
     }
     
-    bool cancel_reserverved(){
+    bool cancel_reserved(){
         for (CoinsVector::iterator coin = coins.begin() ; coin != coins.end(); ++coin){
             if( coin->is_reserverd() ){
                 this->total_value += coin->get_value();
@@ -115,7 +91,7 @@ public:
         }
         return true;
     }
-    bool spend_reservered(){
+    bool spend_reserved(){
         for (CoinsVector::iterator coin = coins.begin() ; coin != coins.end(); ++coin){
             if( coin->is_reserverd() ){
                 coins.erase(coin);
@@ -124,8 +100,11 @@ public:
         }
         return true;
     }
+    CoinsVector *get_coins(){
+        return &coins;
+    }
 private:
-    big_long        total_value;
+    MAX_LONG        total_value;
     CoinsVector     coins;
     CoinsVector     buckets[MAX_POWER];
 };
