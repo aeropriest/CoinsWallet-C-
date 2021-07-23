@@ -23,6 +23,7 @@ public:
                 MAX_LONG low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1);
                 if( value >= low && value < high ){
                     coins_buckets[j].push_back(value);
+                    break;
                 }
             }
         }

@@ -33,15 +33,6 @@ public:
         return true;
     }
     
-    ////////////////////
-    CoinsVector get_bucket(short index){
-        return buckets[index];
-    }
-    
-    short buckets_size() const{
-        return MAX_POWER;
-    }
-    ///////////////
     
     MAX_LONG available() const {
         return this->total_value;

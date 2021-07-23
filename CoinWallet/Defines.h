@@ -24,6 +24,6 @@ typedef unsigned long long      MAX_LONG;
 using namespace std;
 typedef vector<Coin>                        CoinsVector;
 typedef vector<MAX_LONG>                    MaxLongVector;
-typedef vector<MaxLongVector>            BucketVector;
+typedef vector<MaxLongVector>               BucketVector;
 
 #endif /* Defines_h */

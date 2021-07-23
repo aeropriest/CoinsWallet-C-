@@ -13,7 +13,6 @@
 #include "AddTests.h"
 #include "SpendTests.h"
 #include "ReserveTests.h"
-#include "BucketTests.h"
 #include "DistributionTests.h"
 
 int main(int argc, const char * argv[]) {
@@ -21,9 +20,8 @@ int main(int argc, const char * argv[]) {
     AddTests();
     SpendTests();
     ReserveTest();
-    BucketTests();
     DistributionTests();
-
+/*
     Wallet wallet = Wallet();
     for(int j=0; j<MAX_POWER; j++){
         MAX_LONG low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,1+j)-1, coin_val = 0;
@@ -48,6 +46,6 @@ int main(int argc, const char * argv[]) {
         }
         cout<<endl;
     }
-    
+    */
     return 0;
 }
