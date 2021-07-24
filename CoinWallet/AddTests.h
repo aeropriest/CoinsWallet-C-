@@ -8,6 +8,7 @@
 #ifndef AddTests_h
 #define AddTests_h
 
+using namespace std;
 void AddTests(){
     
 

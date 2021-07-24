@@ -46,39 +46,50 @@ public:
     MAX_LONG available() const {
         return this->total_value;
     }
-    
-    // spend the coin of requested value, most often value requested might not be exact sum
-    // of value of coins so only checking closest possible more than requested value
-    // its possible to further go through the reserved coins and bring it closest or exact to
-    // coins required to reserve
-    
-    // validation check is through the 'require' function
-/*
-    
-    MaxLongVectorIt lowest(MAX_LONG value) {
-        MaxLongVectorIt it = lower_bound(coins.begin(), coins.end(), value);
-        return it;
-    }
-    
-    MaxLongVectorIt highest(MAX_LONG value) {
-        MaxLongVectorIt it = upper_bound(coins.begin(), coins.end(), value);
-        //if (it == coins.end()) { return 0; }
-
-        return it;
-    }
-     */
-    bool spend(MAX_LONG value){
-
-        if( !require(value))
-            return false;
-
+        
+    // sort the coins vector and check for closest match of the requested value
+    // if not found, return the end of end of the array
+    MaxLongVectorIt find_closest(MAX_LONG value){
         // sort the coins to find closest value in coins for spending
         sort (coins.begin(), coins.end());
         MaxLongVectorIt lower = lower_bound(coins.begin(), coins.end(), value);
         MaxLongVectorIt upper = upper_bound(coins.begin(), coins.end(), value);
+                
+        // if lower not found, check the higher and return
+        if( lower == coins.end() && upper != coins.end()){
+            return upper;
+        }
         
-        // if no bound found then return the closest can find by sum of values
-        if( lower == coins.end() && upper == coins.end() ){
+        // if uppwer not found, spend the lowest
+        if( upper == coins.end() && lower != coins.end() ){
+            return lower;
+        }
+                
+        // if both bounds are found, return one with closest to spending value i.e. least of 2 bounds
+        if( *lower <= *upper ){
+            return lower;
+        }
+        if( *lower >= *upper ){
+            return upper;
+        }
+        
+        return coins.end();
+    }
+    
+    // spend the coin of requested value, most often value requested might not be exact sum
+    // of value of coins so only checking closest possible more than requested value
+
+    bool spend(MAX_LONG value){
+        // validation check is through the 'require' function
+        if( !require(value))
+            return false;
+        
+        
+        // look for the closest value to spending value
+        MaxLongVectorIt closest = find_closest(value);
+        
+        // nothing close was found so we need to find it by sum of numbers in sorted coins
+        if( closest == coins.end() ){
             MAX_LONG total= 0;
             for (MaxLongVectorIt coin = coins.begin(); coin != coins.end(); ++coin){
                 total += *coin;
@@ -91,39 +102,16 @@ public:
             }
         }
         
-        // if lower not found, check the higher and return
-        if( lower == coins.end() && upper != coins.end()){
-            this->total_value -= *upper;
-            coins.erase(upper);
-            return true;
-        }
-        
-        // if uppwer not found, spend the lowest
-        if( upper == coins.end() && lower != coins.end() ){
-            this->total_value -= *lower;
-            coins.erase(lower);
-            return true;
-        }
-                
-        // if both bounds are found, return one with closest to spending value i.e. least of 2 bounds
-        if( *lower <= *upper ){
-            this->total_value -= *lower;
-            coins.erase(lower);
-            return true;
-        }
-        if( *lower >= *upper ){
-            this->total_value -= *upper;
-            coins.erase(upper);
-            return true;
-        }
+        // a close match was found, remove it from coins vector and decrement the total available value
+        this->total_value -= *closest;
+        coins.erase(closest);
         
         return true;
+
     }    
 
     // reserve the coin of specified value, most often value requested might not be exact sum
     // of value of coins so only check closest possible more than requested value
-    // its possible to further go through the reserved coins and bring it closest or exact to
-    // coins required to reserve
     
     // validation check is through the 'require' function
     bool reserve(MAX_LONG value){
@@ -131,14 +119,10 @@ public:
         if( !require(value))
             return false;
 
-
-        // sort the coins to find closest value in coins for spending
-        sort (coins.begin(), coins.end());
-        MaxLongVectorIt lower = lower_bound(coins.begin(), coins.end(), value);
-        MaxLongVectorIt upper = upper_bound(coins.begin(), coins.end(), value);
+        // look for the closest value to spending value
+        MaxLongVectorIt closest = find_closest(value);
         
-        // if no bound found then return the closest can find by sum of values
-        if( lower == coins.end() && upper == coins.end() ){
+        if( closest == coins.end() ){
             MAX_LONG total= 0;
             for (MaxLongVectorIt coin = coins.begin(); coin != coins.end(); ++coin){
                 total += *coin;
@@ -152,37 +136,12 @@ public:
             }
         }
         
-        // if lower not found, check the higher and return
-        if( lower == coins.end() && upper != coins.end()){
-            this->total_value -= *upper;
-            reserved.push_back(*upper);
-            coins.erase(upper);
-            return true;
-        }
-        
-        // if uppwer not found, spend the lowest
-        if( upper == coins.end() && lower != coins.end() ){
-            this->total_value -= *lower;
-            reserved.push_back(*lower);
-            coins.erase(lower);
-            return true;
-        }
-                
-        // if both bounds are found, return one with closest to spending value i.e. least of 2 bounds
-        if( *lower <= *upper ){
-            this->total_value -= *lower;
-            reserved.push_back(*lower);
-            coins.erase(lower);
-            return true;
-        }
-        if( *lower >= *upper ){
-            this->total_value -= *upper;
-            reserved.push_back(*upper);
-            coins.erase(upper);
-            return true;
-        }
-        
+        // a close match was found, remove it from coins vector and decrement the total available value
+        this->total_value -= *closest;
+        reserved.push_back(*closest);
+        coins.erase(closest);
         return true;
+
     }
     
     // cancel the reserved coins by going through the coins loop, check the coin's reserved flag and
