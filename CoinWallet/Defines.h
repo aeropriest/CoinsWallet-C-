@@ -8,8 +8,8 @@
 #ifndef Defines_h
 #define Defines_h
 #include <cmath>
-#include "Coin.h"
 #include <vector>
+#include <map>
 
 
 #define BUCKET_STEP     1000
@@ -22,8 +22,9 @@ typedef unsigned long long      MAX_LONG;
 
 
 using namespace std;
-typedef vector<Coin>                        CoinsVector;
 typedef vector<MAX_LONG>                    MaxLongVector;
 typedef vector<MaxLongVector>               BucketVector;
+typedef MaxLongVector::iterator             MaxLongVectorIt;
+typedef map<short, MaxLongVector>           BucketMap;
 
 #endif /* Defines_h */

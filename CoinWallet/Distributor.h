@@ -8,35 +8,36 @@
 #ifndef Distributor_h
 #define Distributor_h
 
+// Implementation of distributor class to categorize the coins into buckets in the range 10ⁿ3
 class Distributor{
 public:
-    Distributor(CoinsVector *c) : coins(c){
+    Distributor(MaxLongVector *c) : coins(c){
         
     }
     
-    short distribute(BucketVector *buckets){
+    //short distribute(BucketVector *buckets){
+    BucketMap distribute(){
+        BucketMap   buckets;
+        // sanity check if the coins vector pointer was invalid
+        if( !coins )
+            return buckets;
         
-        MaxLongVector     coins_buckets[MAX_POWER];
-        for (CoinsVector::iterator coin = coins->begin(); coin != coins->end(); ++coin){
-            MAX_LONG value = coin->get_value();
+        // going through each coin in the wallet and add the bucket vector sent by caller
+        for (MaxLongVectorIt coin = coins->begin(); coin != coins->end(); ++coin){
             for( int j=0; j<MAX_POWER; j++){
                 MAX_LONG low = pow(BUCKET_STEP,j), high = pow(BUCKET_STEP,j+1);
-                if( value >= low && value < high ){
-                    coins_buckets[j].push_back(value);
+                if( *coin >= low && *coin < high ){
+                    buckets[j].push_back(*coin);
                     break;
                 }
             }
         }
-        
-        for( int j=0; j<MAX_POWER; j++){
-            if( coins_buckets[j].size() > 0 ){
-                buckets->push_back(coins_buckets[j]);
-            }
-        }
-        return buckets->size();
+        return buckets;
     }
     
 private:
-    CoinsVector     *coins;
+    // Pointer to the coins vector in the wallets
+    MaxLongVector     *coins;
 };
 #endif /* Distributor_h */
+
