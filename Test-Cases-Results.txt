@@ -1,0 +1,44 @@
+------------------------------------------------------------------------------
+Test Boundry Values
+------------------------------------------------------------------------------
+Test Case 1.1 	PASSED ✔ 	[ When wallet created, it should be empty ]
+Test Case 1.2 	PASSED ✔ 	[ Wallet should reject coin of value 0 ]
+Test Case 1.3 	PASSED ✔ 	[ Wallet should not add coin of value 0 ]
+Test Case 1.4 	PASSED ✔ 	[ Wallet should not add coin of negetive value ]
+Test Case 1.5 	PASSED ✔ 	[ Wallet balance should not be negetive]
+Test Case 1.6 	PASSED ✔ 	[ Wallet should reject coin of value more than 10 ~ 15 ]
+Test Case 1.7 	PASSED ✔ 	[ Wallet added value less than 10 ~ 15 ]
+Test Case 1.8 	PASSED ✔ 	[ Wallet balance 999999999999999 is less than 1000000000000000]
+Test Case 1.9 	PASSED ✔ 	[ Wallet value 999999113261014465, rejected coin after 999999999999999999 ]
+------------------------------------------------------------------------------
+Test coin spending
+------------------------------------------------------------------------------
+Test Case 2.1 	PASSED ✔ 	[ Spending from empty wallet was rejected ]
+Test Case 2.2 	PASSED ✔ 	[ Wallet balance of first 10 numbers is 45]
+Test Case 2.3 	PASSED ✔ 	[ Spending negetive value was rejected ]
+Test Case 2.4 	PASSED ✔ 	[ Spending (22) less than wallet value 45 was approved]
+Test Case 2.5 	PASSED ✔ 	[ Spending (55) more than wallet value 17 was rejected]
+Test Case 2.6 	PASSED ✔ 	[ Most saved by spending (1000501) for request of 1000491
+------------------------------------------------------------------------------
+Test coin reservation
+------------------------------------------------------------------------------
+Test Case 3.1 	PASSED ✔ 	[ Reserving from empty wallet was rejected ]
+Test Case 3.2 	PASSED ✔ 	[ Reserving negetive value was rejected ]
+Test Case 3.3 	PASSED ✔ 	[ Reserving more than wallet limit was rejected]
+Test Case 3.4 	PASSED ✔ 	[ Balance after reserving coin worth 20 is 24]
+Test Case 3.5 	PASSED ✔ 	[ Reservation cancelled, balance is 45]
+Test Case 3.6 	PASSED ✔ 	[ Balance after spending reserved coin worth 20 is 24]
+------------------------------------------------------------------------------
+Test coin distribution in buckets
+------------------------------------------------------------------------------
+Test Case 5.1 	PASSED ✔ 	[ This distribution should have 5 buckets  ]
+Test Case 5.2	PASSED ✔ 	[ Each bucket should have 5 coins  ]
+Test Case 5.3	PASSED ✔ 	[ Min 263 Max 977 should be in bucket range 1 ... 1000
+Test Case 5.4	PASSED ✔ 	[ Min 226441 Max 740494 should be in bucket range 1000 ... 1000000
+Test Case 5.5	PASSED ✔ 	[ Min 422069181 Max 806136108 should be in bucket range 1000000 ... 1000000000
+Test Case 5.6	PASSED ✔ 	[ Min 1429876053 Max 2888385238 should be in bucket range 1000000000 ... 1000000000000
+Test Case 5.7	PASSED ✔ 	[ Min 1000400413871 Max 1001140301318 should be in bucket range 1000000000000 ... 1000000000000000
+Test Case 5.8	PASSED ✔ 	[ Value of coins in wallet 5018536019780 should be sum of coins in buckets 5018536019780 ]
+Test Case 5.10	PASSED ✔ 	[ After spending  1689663847 coins in bucket reduced from 25 to 24 ]
+Test Case 5.11	PASSED ✔ 	[ After spending  1689663847 value in buckets reduced from 5018536019780 to 5016214605085 ]
+Program ended with exit code: 0
